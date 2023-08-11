@@ -7,6 +7,7 @@ const App = () => {
   const [completingtask, setCompletingtask] = useState([]);
   const [val, setVal] = useState("");
   const [isEdit, setIsEdit] = useState(false);
+  const [isEditC, setIsEditC] = useState(false);
 
   const [index, setIndex] = useState("");
 
@@ -20,20 +21,42 @@ const App = () => {
     setActivetask([...activetask]);
   };
 
+  const handleDeleteC = (i) => {
+    completingtask.splice(i, 1);
+    setCompletingtask([...completingtask]);
+  };
+
   const handleEdit = (i, ele) => {
     setVal(ele);
     setIsEdit(true);
     setIndex(i);
   };
 
+  const handleEditC = (i, ele) => {
+    setVal(ele);
+    setIsEdit(true);
+    setIndex(i);
+    setIsEditC(true);
+  };
+
   const handAddActiveTaskEdit = () => {
-    activetask[index] = val;
+    if (isEditC) {
+      completingtask[index] = val;
 
-    setActivetask([...activetask]);
+      setCompletingtask([...completingtask]);
 
-    setVal("");
+      setVal("");
 
-    setIsEdit(false);
+      setIsEdit(false);
+    } else {
+      activetask[index] = val;
+
+      setActivetask([...activetask]);
+
+      setVal("");
+
+      setIsEdit(false);
+    }
   };
 
   const handleCompleted = (i, ele) => {
@@ -124,7 +147,7 @@ const App = () => {
                   <AiFillDelete
                     fontSize={22}
                     style={{ cursor: "pointer" }}
-                    onClick={() => handleDelete(i)}
+                    onClick={() => handleDeleteC(i)}
                   />
                 </p>
 
@@ -132,7 +155,7 @@ const App = () => {
                   <AiFillEdit
                     fontSize={22}
                     style={{ cursor: "pointer" }}
-                    onClick={() => handleEdit(i, ele)}
+                    onClick={() => handleEditC(i, ele)}
                   />
                 </p>
               </div>
